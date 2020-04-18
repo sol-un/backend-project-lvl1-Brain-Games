@@ -1,1 +1,2 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/maintainability)](https://codeclimate.com/github/sol-un/backend-project-lvl1/)
+![Lint](https://github.com/sol-un/backend-project-lvl1/workflows/Lint/badge.svg)
