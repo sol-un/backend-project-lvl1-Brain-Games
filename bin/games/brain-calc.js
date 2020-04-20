@@ -5,9 +5,10 @@ const calculatorGame = () => {
   const operators = ['+', '-', '*'];
   const getRandom = () => Math.floor(Math.random() * (99 - 1) + 1);
   const getOperator = () => operators[Math.floor(Math.random() * operators.length)];
+  console.log('Solve the expressions provided.');
   for (let i = 3; i > 0; i -= 1) {
     const question = `${getRandom()} ${getOperator()} ${getRandom()}`;
-    const answer = String(eval(question));
+    const answer = `${eval(question)}`;
     if (!playGame(question, answer)) {
       return;
     }
