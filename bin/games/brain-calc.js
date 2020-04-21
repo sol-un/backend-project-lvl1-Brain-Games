@@ -1,9 +1,10 @@
 #!/usr/bin/env node
-import { greetAndAskName, playGame, showGoodEnding } from '../../src/index.js';
+import {
+  greetAndAskName, playGame, getRandom, showGoodEnding,
+} from '../../src/index.js';
 
-const calculatorGame = () => {
+const runGame = () => {
   const operators = ['+', '-', '*'];
-  const getRandom = () => Math.floor(Math.random() * (99 - 1) + 1);
   const getOperator = () => operators[Math.floor(Math.random() * operators.length)];
   console.log('Solve the expressions provided.');
   for (let i = 3; i > 0; i -= 1) {
@@ -17,4 +18,4 @@ const calculatorGame = () => {
 };
 
 greetAndAskName();
-calculatorGame();
+runGame();

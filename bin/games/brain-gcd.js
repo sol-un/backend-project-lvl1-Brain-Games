@@ -1,5 +1,7 @@
 #!/usr/bin/env node
-import { greetAndAskName, playGame, showGoodEnding } from '../../src/index.js';
+import {
+  greetAndAskName, playGame, getRandom, showGoodEnding,
+} from '../../src/index.js';
 
 const getGCD = (str) => {
   let [x, y] = [...str.split(' ')];
@@ -11,8 +13,7 @@ const getGCD = (str) => {
   return x;
 };
 
-const gcdGame = () => {
-  const getRandom = () => Math.floor(Math.random() * (99 - 1) + 1);
+const runGame = () => {
   console.log('Find the greatest common divisor of the numbers provided.');
   for (let i = 3; i > 0; i -= 1) {
     const question = `${getRandom()} ${getRandom()}`;
@@ -25,4 +26,4 @@ const gcdGame = () => {
 };
 
 greetAndAskName();
-gcdGame();
+runGame();
