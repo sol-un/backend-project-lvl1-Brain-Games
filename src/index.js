@@ -1,6 +1,6 @@
 import readlineSync from 'readline-sync';
 
-// Use hoisting for the 'userName' variable to pass around all functions.
+// Use hoisting for the 'userName' and 'userAnswer' variables to pass around all functions.
 let userName;
 
 // Actually assign the 'userName' value.
@@ -23,9 +23,13 @@ const playGame = (question, answer) => {
       return true;
     default:
       console.log(`The answer "${userAnswer}" is wrong :( The correct answer is "${answer}".`);
-      console.log(`Let's try again, ${userName}!`);
       return false;
   }
+};
+
+// Prompt to restart on losing a game.
+const showBadEnding = () => {
+  console.log(`Let's try again, ${userName}!`);
 };
 
 // Congratulate on finishing a game.
@@ -34,5 +38,5 @@ const showGoodEnding = () => {
 };
 
 export {
-  greetAndAskName, playGame, getRandom, showGoodEnding,
+  greetAndAskName, playGame, getRandom, showGoodEnding, showBadEnding,
 };

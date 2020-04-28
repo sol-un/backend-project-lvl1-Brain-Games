@@ -1,7 +1,6 @@
-#!/usr/bin/env node
 import {
-  greetAndAskName, playGame, getRandom, showGoodEnding,
-} from '../../src/index.js';
+  greetAndAskName, playGame, getRandom, showGoodEnding, showBadEnding,
+} from '../index.js';
 
 
 const getQuestionAnswerPair = () => {
@@ -30,18 +29,17 @@ const getQuestionAnswerPair = () => {
   return questionAnswerPair;
 };
 
-const runGame = () => {
+export default () => {
+  greetAndAskName();
   console.log('Find the number missing in the progression.');
   for (let i = 3; i > 0; i -= 1) {
     const questionAnswerPair = getQuestionAnswerPair();
     const question = questionAnswerPair[0].join(' ');
     const answer = `${questionAnswerPair[1]}`;
     if (!playGame(question, answer)) {
+      showBadEnding();
       return;
     }
   }
   showGoodEnding();
 };
-
-greetAndAskName();
-runGame();
