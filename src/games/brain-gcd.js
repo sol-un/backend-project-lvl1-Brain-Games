@@ -1,27 +1,20 @@
+import math from 'mathjs';
 import {
-  greetAndAskName, playGame, getRandom, showGoodEnding, showBadEnding,
+  playGame, getRandom,
 } from '../index.js';
 
-const getGCD = (str) => {
-  let [x, y] = [...str.split(' ')];
-  while (y) {
-    const t = y;
-    y = x % y;
-    x = t;
-  }
-  return x;
-};
+const gameRules = 'Find the greatest common divisor of the numbers provided.';
 
 export default () => {
-  greetAndAskName();
-  console.log('Find the greatest common divisor of the numbers provided.');
+  const qaSet = [];
   for (let i = 3; i > 0; i -= 1) {
-    const question = `${getRandom()} ${getRandom()}`;
-    const answer = `${getGCD(question)}`;
-    if (!playGame(question, answer)) {
-      showBadEnding();
-      return;
-    }
+    const num1 = getRandom();
+    const num2 = getRandom();
+
+    const question = `${num1} ${num2}`;
+    const answer = `${math.gcd(num1, num2)}`;
+    const qaPair = [question, answer];
+    qaSet.push(qaPair);
   }
-  showGoodEnding();
+  playGame(qaSet, gameRules);
 };

@@ -1,22 +1,28 @@
 import {
-  greetAndAskName, playGame, getRandom, showGoodEnding, showBadEnding,
+  playGame, getRandom,
 } from '../index.js';
 
-const isPrime = (num) => {
-  for (let i = 2, s = Math.sqrt(num); i <= s; i += 1) { if (num % i === 0) return false; }
-  return num > 1;
+const gameRules = 'Answer "yes" if the number is prime, otherwise answer "no".';
+
+const isPrime = (n) => {
+  if (n <= 1) {
+    return false;
+  }
+  for (let i = 2; i <= n / 2; i += 1) {
+    if (n % i === 0) {
+      return false;
+    }
+  }
+  return true;
 };
 
 export default () => {
-  greetAndAskName();
-  console.log('Answer "yes" if the number is prime, otherwise answer "no".');
+  const qaSet = [];
   for (let i = 3; i > 0; i -= 1) {
     const question = getRandom();
     const answer = isPrime(question) ? 'yes' : 'no';
-    if (!playGame(question, answer)) {
-      showBadEnding();
-      return;
-    }
+    const qaPair = [question, answer];
+    qaSet.push(qaPair);
   }
-  showGoodEnding();
+  playGame(qaSet, gameRules);
 };

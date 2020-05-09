@@ -1,45 +1,47 @@
 import {
-  greetAndAskName, playGame, getRandom, showGoodEnding, showBadEnding,
+  playGame, getRandom,
 } from '../index.js';
 
+const gameRules = 'Find the number missing in the progression.';
 
-const getQuestionAnswerPair = () => {
-  // Choose the first number in the progression between 1-100 (default behavior) and an
-  // increment between 1-10.
+const generateQaPair = () => {
   const progression = [getRandom()];
   const increment = getRandom(10);
+  const lastIndex = 9;
 
-  // Add nine more numbers to the progression.
-  for (let i = 0; i < 9; i += 1) {
+  for (let i = 0; i < lastIndex; i += 1) {
     const current = progression[i];
     const next = current + increment;
     progression.push(next);
   }
 
-  // Choose a number in the progression, aka the answer, an replace with '..'
-  const answer = progression[Math.floor(Math.random() * progression.length)];
-  const answerIndex = progression.indexOf(answer);
-  progression[answerIndex] = '..';
+  const question = hideElement(progression);
+  const answer = `${evalHidden(question, increment)}`;
+  return [question.join(' '), answer];
+};
 
-  // Set up an array with the progression as the 0th element and the answer as the 1st.
-  const questionAnswerPair = [];
-  questionAnswerPair.push(progression);
-  questionAnswerPair.push(answer);
+const hideElement = (progression) => {
+  const hiddenIndex = getRandom(progression.length, 0);
+  progression[hiddenIndex] = '..';
 
-  return questionAnswerPair;
+  return progression;
+};
+
+const evalHidden = (progression, increment) => {
+  const hiddenIndex = progression.indexOf('..');
+  if (hiddenIndex === 0) {
+    return progression[1] - increment;
+  }
+  const firstElement = progression[0];
+  const hiddenElement = firstElement + increment * hiddenIndex;
+  return hiddenElement;
 };
 
 export default () => {
-  greetAndAskName();
-  console.log('Find the number missing in the progression.');
+  const qaSet = [];
   for (let i = 3; i > 0; i -= 1) {
-    const questionAnswerPair = getQuestionAnswerPair();
-    const question = questionAnswerPair[0].join(' ');
-    const answer = `${questionAnswerPair[1]}`;
-    if (!playGame(question, answer)) {
-      showBadEnding();
-      return;
-    }
+    const qaPair = generateQaPair();
+    qaSet.push(qaPair);
   }
-  showGoodEnding();
+  playGame(qaSet, gameRules);
 };

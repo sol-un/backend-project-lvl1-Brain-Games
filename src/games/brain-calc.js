@@ -1,20 +1,23 @@
 import math from 'mathjs';
 import {
-  greetAndAskName, playGame, getRandom, showGoodEnding, showBadEnding,
+  playGame, getRandom,
 } from '../index.js';
 
-export default () => {
-  greetAndAskName();
+const gameRules = 'Solve the expressions provided.';
+
+const pickOperator = () => {
   const operators = ['+', '-', '*'];
-  const getOperator = () => operators[Math.floor(Math.random() * operators.length)];
-  console.log('Solve the expressions provided.');
+  const randomOperator = operators[getRandom(operators.length, 0)];
+  return randomOperator;
+};
+
+export default () => {
+  const qaSet = [];
   for (let i = 3; i > 0; i -= 1) {
-    const question = `${getRandom()} ${getOperator()} ${getRandom()}`;
+    const question = `${getRandom()} ${pickOperator()} ${getRandom()}`;
     const answer = `${math.evaluate(question)}`;
-    if (!playGame(question, answer)) {
-      showBadEnding();
-      return;
-    }
+    const qaPair = [question, answer];
+    qaSet.push(qaPair);
   }
-  showGoodEnding();
+  playGame(qaSet, gameRules);
 };

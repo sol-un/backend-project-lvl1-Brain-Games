@@ -1,42 +1,32 @@
 import readlineSync from 'readline-sync';
 
-// Use hoisting for the 'userName' and 'userAnswer' variables to pass around all functions.
-let userName;
-
-// Actually assign the 'userName' value.
-const greetAndAskName = () => {
-  console.log('Welcome to the Brain Games!');
-  userName = readlineSync.question('May I have your name? ');
-  console.log(`Hello, ${userName}!`);
+// Assign value to userName.
+const askName = () => {
+  const userName = readlineSync.question('May I have your name? ');
+  return userName;
 };
 
 // Generate a random number for all different games.
 const getRandom = (max = 100, min = 1) => Math.floor(Math.random() * (max - min) + min);
 
-// Receive and verify a question/answer pair from a game module.
-const playGame = (question, answer) => {
-  console.log(`Question: ${question}`);
-  const userAnswer = readlineSync.question('Your answer: ');
-  switch (userAnswer) {
-    case answer:
-      console.log('Correct!');
-      return true;
-    default:
-      console.log(`The answer "${userAnswer}" is wrong :( The correct answer is "${answer}".`);
-      return false;
+// Play games using data from the game modules.
+const playGame = (qaSet, gameRules) => {
+  console.log('Welcome to the Brain Games!');
+  const userName = askName();
+  console.log(gameRules);
+  for (let i = 0; i < qaSet.length; i += 1) {
+    console.log(`Question: ${qaSet[i][0]}`);
+    const userAnswer = readlineSync.question('Your answer: ');
+    if (userAnswer !== qaSet[i][1]) {
+      console.log(`The answer "${userAnswer}" is wrong :( The correct answer is "${qaSet[i][1]}".`);
+      console.log(`Let's try again, ${userName}!`);
+      return;
+    }
+    console.log('Correct!');
   }
-};
-
-// Prompt to restart on losing a game.
-const showBadEnding = () => {
-  console.log(`Let's try again, ${userName}!`);
-};
-
-// Congratulate on finishing a game.
-const showGoodEnding = () => {
   console.log(`Congratulations, ${userName}!`);
 };
 
 export {
-  greetAndAskName, playGame, getRandom, showGoodEnding, showBadEnding,
+  playGame, getRandom,
 };
