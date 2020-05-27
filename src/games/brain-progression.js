@@ -1,15 +1,21 @@
-import {
-  playGame, getRandom,
-} from '../index.js';
+import playGame from '../index.js';
+import getRandom from '../utils.js';
 
-const gameRules = 'Find the number missing in the progression.';
+const gameDescription = 'Find the number missing in the progression.';
 
-const hideElement = (progression) => {
-  const modifiedProgression = [...progression];
-  const hiddenIndex = getRandom(modifiedProgression.length, 0);
-  modifiedProgression[hiddenIndex] = '..';
+const generateProgression = (firstElement, increment, cardinality = 10) => {
+  const progression = [];
+  for (let i = 0; i < cardinality; i += 1) {
+    const element = firstElement + increment * i;
+    progression.push(element);
+  }
+  return progression;
+};
 
-  return modifiedProgression;
+const hideElement = (progression, index) => {
+  const newProgression = [...progression];
+  newProgression[index] = '..';
+  return newProgression;
 };
 
 const evalHidden = (progression, increment) => {
@@ -18,31 +24,18 @@ const evalHidden = (progression, increment) => {
     return progression[1] - increment;
   }
   const firstElement = progression[0];
-  const hiddenElement = firstElement + increment * hiddenIndex;
-  return hiddenElement;
+  return firstElement + increment * hiddenIndex;
 };
 
 const generateQaPair = () => {
-  const progression = [getRandom()];
   const increment = getRandom(10);
-  const lastIndex = 9;
-
-  for (let i = 0; i < lastIndex; i += 1) {
-    const current = progression[i];
-    const next = current + increment;
-    progression.push(next);
-  }
-
-  const question = hideElement(progression);
-  const answer = `${evalHidden(question, increment)}`;
-  return [question.join(' '), answer];
+  const progression = generateProgression(getRandom(), increment);
+  const hiddenIndex = getRandom(progression.length);
+  const question = hideElement(progression, hiddenIndex);
+  const answer = evalHidden(question, increment);
+  return [question.join(' '), `${answer}`];
 };
 
 export default () => {
-  const qaSet = [];
-  for (let i = 3; i > 0; i -= 1) {
-    const qaPair = generateQaPair();
-    qaSet.push(qaPair);
-  }
-  playGame(qaSet, gameRules);
+  playGame(gameDescription, generateQaPair);
 };

@@ -6,19 +6,17 @@ const askName = () => {
   return userName;
 };
 
-// Generate a random number for all different games.
-const getRandom = (max = 100, min = 1) => Math.floor(Math.random() * (max - min) + min);
-
 // Play games using data from the game modules.
-const playGame = (qaSet, gameRules) => {
+const playGame = (gameDescription, generateQaPair) => {
   console.log('Welcome to the Brain Games!');
   const userName = askName();
-  console.log(gameRules);
-  for (let i = 0; i < qaSet.length; i += 1) {
-    console.log(`Question: ${qaSet[i][0]}`);
+  console.log(gameDescription);
+  for (let rounds = 3; rounds > 0; rounds -= 1) {
+    const [currentQuestion, currentAnswer] = generateQaPair();
+    console.log(`Question: ${currentQuestion}`);
     const userAnswer = readlineSync.question('Your answer: ');
-    if (userAnswer !== qaSet[i][1]) {
-      console.log(`The answer "${userAnswer}" is wrong :( The correct answer is "${qaSet[i][1]}".`);
+    if (userAnswer !== currentAnswer) {
+      console.log(`The answer "${userAnswer}" is wrong :( The correct answer is "${currentAnswer}".`);
       console.log(`Let's try again, ${userName}!`);
       return;
     }
@@ -27,6 +25,4 @@ const playGame = (qaSet, gameRules) => {
   console.log(`Congratulations, ${userName}!`);
 };
 
-export {
-  playGame, getRandom,
-};
+export { playGame as default };

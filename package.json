@@ -25,7 +25,6 @@
   },
   "homepage": "https://github.com/sol-un/backend-project-lvl1#readme",
   "dependencies": {
-    "mathjs": "^6.6.4",
     "readline-sync": "^1.4.10"
   },
   "devDependencies": {

@@ -1,9 +1,7 @@
-import math from 'mathjs';
-import {
-  playGame, getRandom,
-} from '../index.js';
+import playGame from '../index.js';
+import getRandom from '../utils.js';
 
-const gameRules = 'Solve the expressions provided.';
+const gameDescription = 'Solve the expressions provided.';
 
 const pickOperator = () => {
   const operators = ['+', '-', '*'];
@@ -11,13 +9,30 @@ const pickOperator = () => {
   return randomOperator;
 };
 
-export default () => {
-  const qaSet = [];
-  for (let i = 3; i > 0; i -= 1) {
-    const question = `${getRandom()} ${pickOperator()} ${getRandom()}`;
-    const answer = `${math.evaluate(question)}`;
-    const qaPair = [question, answer];
-    qaSet.push(qaPair);
+const evalExpression = (operand1, operator, operand2) => {
+  let result;
+  switch (operator) {
+    case '+':
+      result = operand1 + operand2;
+      break;
+    case '-':
+      result = operand1 - operand2;
+      break;
+    case '*':
+      result = operand1 * operand2;
+      break;
+    default:
+      throw new Error('Invalid data!');
   }
-  playGame(qaSet, gameRules);
+  return result;
+};
+
+const generateQaPair = () => {
+  const question = [getRandom(), pickOperator(), getRandom()];
+  const answer = evalExpression(...question);
+  return [question.join(' '), `${answer}`];
+};
+
+export default () => {
+  playGame(gameDescription, generateQaPair);
 };

@@ -1,18 +1,16 @@
-import {
-  playGame, getRandom,
-} from '../index.js';
+import playGame from '../index.js';
+import getRandom from '../utils.js';
 
-const gameRules = 'Answer "yes" if the number is even, otherwise answer "no".';
+const gameDescription = 'Answer "yes" if the number is even, otherwise answer "no".';
 
-const isEven = (x) => x % 2 === 0;
+const isEven = (number) => number % 2 === 0;
+
+const generateQaPair = () => {
+  const question = getRandom();
+  const answer = isEven(question) ? 'yes' : 'no';
+  return [question, answer];
+};
 
 export default () => {
-  const qaSet = [];
-  for (let i = 3; i > 0; i -= 1) {
-    const question = getRandom();
-    const answer = isEven(question) ? 'yes' : 'no';
-    const qaPair = [question, answer];
-    qaSet.push(qaPair);
-  }
-  playGame(qaSet, gameRules);
+  playGame(gameDescription, generateQaPair);
 };

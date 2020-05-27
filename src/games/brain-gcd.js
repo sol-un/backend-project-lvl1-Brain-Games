@@ -1,20 +1,22 @@
-import math from 'mathjs';
-import {
-  playGame, getRandom,
-} from '../index.js';
+import playGame from '../index.js';
+import getRandom from '../utils.js';
 
-const gameRules = 'Find the greatest common divisor of the numbers provided.';
+const gameDescription = 'Find the greatest common divisor of the numbers provided.';
+
+const evaluateGcd = (num1, num2) => {
+  if (num2 === 0) {
+    return num1;
+  }
+
+  return evaluateGcd(num2, num1 % num2);
+};
+
+const generateQaPair = () => {
+  const question = [getRandom(), getRandom()];
+  const answer = evaluateGcd(...question);
+  return [question.join(' '), `${answer}`];
+};
 
 export default () => {
-  const qaSet = [];
-  for (let i = 3; i > 0; i -= 1) {
-    const num1 = getRandom();
-    const num2 = getRandom();
-
-    const question = `${num1} ${num2}`;
-    const answer = `${math.gcd(num1, num2)}`;
-    const qaPair = [question, answer];
-    qaSet.push(qaPair);
-  }
-  playGame(qaSet, gameRules);
+  playGame(gameDescription, generateQaPair);
 };

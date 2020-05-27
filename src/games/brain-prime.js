@@ -1,28 +1,26 @@
-import {
-  playGame, getRandom,
-} from '../index.js';
+import playGame from '../index.js';
+import getRandom from '../utils.js';
 
-const gameRules = 'Answer "yes" if the number is prime, otherwise answer "no".';
+const gameDescription = 'Answer "yes" if the number is prime, otherwise generateAnswer "no".';
 
-const isPrime = (n) => {
-  if (n <= 1) {
+const isPrime = (number) => {
+  if (number <= 1) {
     return false;
   }
-  for (let i = 2; i <= n / 2; i += 1) {
-    if (n % i === 0) {
+  for (let i = 2; i <= number / 2; i += 1) {
+    if (number % i === 0) {
       return false;
     }
   }
   return true;
 };
 
+const generateQaPair = () => {
+  const question = getRandom();
+  const answer = isPrime(question) ? 'yes' : 'no';
+  return [question, answer];
+};
+
 export default () => {
-  const qaSet = [];
-  for (let i = 3; i > 0; i -= 1) {
-    const question = getRandom();
-    const answer = isPrime(question) ? 'yes' : 'no';
-    const qaPair = [question, answer];
-    qaSet.push(qaPair);
-  }
-  playGame(qaSet, gameRules);
+  playGame(gameDescription, generateQaPair);
 };
