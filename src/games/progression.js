@@ -18,22 +18,15 @@ const hideElement = (progression, index) => {
   return newProgression;
 };
 
-const evalHidden = (progression, increment) => {
-  const hiddenIndex = progression.indexOf('..');
-  if (hiddenIndex === 0) {
-    return progression[1] - increment;
-  }
-  const firstElement = progression[0];
-  return firstElement + increment * hiddenIndex;
-};
-
 const generateQaPair = () => {
-  const increment = getRandom(10);
+  const increment = getRandom(1, 10);
   const progression = generateProgression(getRandom(), increment);
-  const hiddenIndex = getRandom(progression.length);
+  const hiddenIndex = getRandom(0, progression.length - 1);
   const question = hideElement(progression, hiddenIndex);
-  const answer = evalHidden(question, increment);
-  return [question.join(' '), `${answer}`];
+  const answer = hiddenIndex === 0
+    ? question[1] - increment
+    : question[0] + increment * hiddenIndex;
+  return [question.join(' '), answer.toString()];
 };
 
 export default () => {

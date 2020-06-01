@@ -5,11 +5,11 @@ const gameDescription = 'Solve the expressions provided.';
 
 const pickOperator = () => {
   const operators = ['+', '-', '*'];
-  const randomOperator = operators[getRandom(operators.length, 0)];
+  const randomOperator = operators[getRandom(0, operators.length - 1)];
   return randomOperator;
 };
 
-const evalExpression = (operand1, operator, operand2) => {
+const evalExpression = (operand1, operand2, operator) => {
   let result;
   switch (operator) {
     case '+':
@@ -28,9 +28,11 @@ const evalExpression = (operand1, operator, operand2) => {
 };
 
 const generateQaPair = () => {
-  const question = [getRandom(), pickOperator(), getRandom()];
-  const answer = evalExpression(...question);
-  return [question.join(' '), `${answer}`];
+  const operand1 = getRandom();
+  const operand2 = getRandom();
+  const operator = pickOperator();
+  const answer = evalExpression(operand1, operand2, operator);
+  return [`${operand1} ${operator} ${operand2}`, answer.toString()];
 };
 
 export default () => {

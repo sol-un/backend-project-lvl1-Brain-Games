@@ -12,9 +12,10 @@ const evaluateGcd = (num1, num2) => {
 };
 
 const generateQaPair = () => {
-  const question = [getRandom(), getRandom()];
-  const answer = evaluateGcd(...question);
-  return [question.join(' '), `${answer}`];
+  const num1 = getRandom();
+  const num2 = getRandom();
+  const answer = evaluateGcd(num1, num2);
+  return [`${num1} ${num2}`, answer.toString()];
 };
 
 export default () => {
