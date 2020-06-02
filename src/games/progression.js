@@ -19,13 +19,12 @@ const hideElement = (progression, index) => {
 };
 
 const generateQaPair = () => {
+  const firstElement = getRandom();
   const increment = getRandom(1, 10);
-  const progression = generateProgression(getRandom(), increment);
+  const progression = generateProgression(firstElement, increment);
   const hiddenIndex = getRandom(0, progression.length - 1);
   const question = hideElement(progression, hiddenIndex);
-  const answer = hiddenIndex === 0
-    ? question[1] - increment
-    : question[0] + increment * hiddenIndex;
+  const answer = firstElement + increment * hiddenIndex;
   return [question.join(' '), answer.toString()];
 };
 

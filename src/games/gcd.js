@@ -14,8 +14,9 @@ const evaluateGcd = (num1, num2) => {
 const generateQaPair = () => {
   const num1 = getRandom();
   const num2 = getRandom();
+  const question = `${num1} ${num2}`;
   const answer = evaluateGcd(num1, num2);
-  return [`${num1} ${num2}`, answer.toString()];
+  return [question, answer.toString()];
 };
 
 export default () => {

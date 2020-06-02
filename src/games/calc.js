@@ -31,8 +31,9 @@ const generateQaPair = () => {
   const operand1 = getRandom();
   const operand2 = getRandom();
   const operator = pickOperator();
+  const question = `${operand1} ${operator} ${operand2}`;
   const answer = evalExpression(operand1, operand2, operator);
-  return [`${operand1} ${operator} ${operand2}`, answer.toString()];
+  return [question, answer.toString()];
 };
 
 export default () => {

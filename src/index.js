@@ -11,8 +11,8 @@ const playGame = (gameDescription, generateQaPair) => {
   console.log('Welcome to the Brain Games!');
   const userName = askName();
   console.log(gameDescription);
-  let roundNumber = 3;
-  for (roundNumber; roundNumber > 0; roundNumber -= 1) {
+  const roundsCount = 3;
+  for (let i = roundsCount; i > 0; i -= 1) {
     const [currentQuestion, currentAnswer] = generateQaPair();
     console.log(`Question: ${currentQuestion}`);
     const userAnswer = readlineSync.question('Your answer: ');
